@@ -1,0 +1,52 @@
+﻿@model LuminTrack.Models.Luminaria
+
+@{
+    ViewBag.Title = "Registrar Luminaria";
+}
+
+<h2>Registrar Luminaria</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Tipo)
+        @Html.TextBoxFor(m => m.Tipo, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Latitud)
+        @Html.TextBoxFor(m => m.Latitud, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Longitud)
+        @Html.TextBoxFor(m => m.Longitud, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Potencia)
+        @Html.TextBoxFor(m => m.Potencia, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>¿Tiene Panel Solar?</label>
+        @Html.CheckBoxFor(m => m.TienePanelSolar)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Estado)
+        @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
+        {
+            "Funcional",
+            "Dañada",
+            "EnReparacion",
+            "Obsoleta"
+        }), "-- Seleccione Estado --", new { @class = "form-control" })
+    </div>
+
+    <button class="btn btn-primary" type="submit">Guardar</button>
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-secondary" })
+}
+

@@ -1,0 +1,41 @@
+﻿@model LuminTrack.Models.Usuario
+
+@{
+    ViewBag.Title = "Crear Usuario";
+}
+
+<h2>Crear Usuario</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Apellido)
+        @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+    </div>
+
+    <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" name="Password" class="form-control" required />
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Rol")
+        @Html.DropDownListFor(m => m.Rol, (SelectList)ViewBag.Roles,
+            "-- Seleccione un Rol --", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Usuario</button>
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-secondary" })
+}

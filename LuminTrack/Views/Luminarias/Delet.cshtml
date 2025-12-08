@@ -1,0 +1,25 @@
+﻿@model LuminTrack.Models.Luminaria
+
+<h2>Eliminar Luminaria</h2>
+
+<p>¿Está seguro que desea eliminar esta luminaria?</p>
+
+<dl class="dl-horizontal">
+    <dt>Tipo:</dt>
+    <dd>@Model.Tipo</dd>
+
+    <dt>Coordenadas:</dt>
+    <dd>@Model.Latitud , @Model.Longitud</dd>
+
+    <dt>Estado:</dt>
+    <dd>@Model.Estado</dd>
+</dl>
+
+@using (Html.BeginForm("Delete", "Luminarias", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <button class="btn btn-danger" type="submit">Eliminar</button>
+    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+}

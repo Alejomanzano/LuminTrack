@@ -1,0 +1,44 @@
+﻿@model LuminTrack.Models.Usuario
+
+@{
+    ViewBag.Title = "Editar Usuario";
+}
+
+<h2>Editar Usuario</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nombre)
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Apellido)
+        @Html.TextBoxFor(m => m.Apellido, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+    </div>
+
+    <div class="form-group">
+        <label>Nueva Contraseña (opcional)</label>
+        <input type="password" name="Password" class="form-control" />
+        <small class="text-muted">Deja en blanco si no deseas cambiarla.</small>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Rol")
+        @Html.DropDownListFor(m => m.Rol, (SelectList)ViewBag.Roles,
+            "-- Seleccione un Rol --", new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-secondary" })
+}
+

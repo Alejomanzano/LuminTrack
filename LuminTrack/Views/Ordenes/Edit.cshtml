@@ -1,0 +1,66 @@
+﻿@model LuminTrack.Models.OrdenTrabajo
+
+@{
+    ViewBag.Title = "Editar Orden de Trabajo";
+}
+
+<h2>Editar Orden de Trabajo</h2>
+
+@using (Html.BeginForm("Edit", "Ordenes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Descripcion)
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Estado")
+        @Html.DropDownListFor(m => m.Estado, new SelectList(new[]
+        {
+            "Asignada",
+            "EnProceso",
+            "Finalizada",
+            "Cancelada"
+        }, Model.Estado), "-- Seleccione Estado --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TecnicoAsignado)
+        @Html.TextBoxFor(m => m.TecnicoAsignado, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Asociar a Reporte (Opcional)")
+        @Html.DropDownListFor(m => m.ReporteId, (SelectList)ViewBag.Reportes,
+            "-- Seleccione Reporte --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Asociar a Luminaria (Opcional)")
+        @Html.DropDownListFor(m => m.LuminariaId, (SelectList)ViewBag.Luminarias,
+            "-- Seleccione Luminaria --", new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Evidencia Actual:</label><br />
+        @if (!string.IsNullOrEmpty(Model.FotoEvidenciaURL))
+        {
+            <img src="@Url.Content(Model.FotoEvidenciaURL)" width="150" />
+        }
+        else
+        {
+            <span>No hay evidencia cargada</span>
+        }
+    </div>
+
+    <div class="form-group">
+        <label>Nueva Evidencia (opcional)</label>
+        <input type="file" name="evidencia" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    @Html.ActionLink("Volver", "Index", null, new { @class = "btn btn-secondary" })
+}

@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Inicio - LuminTrack";
+}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">Bienvenido a LuminTrack</h1>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h4 class="text-center">Hola, @User.Identity.Name</h4>
+        <p class="text-center">Rol: <strong>@Session["Rol"]</strong></p>
+    }
+    else
+    {
+        <h4 class="text-center">Sistema de Gestión de Reportes y Luminarias</h4>
+    }
+
+    <hr />
+
+    <div class="row text-center">
+
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 shadow-sm">
+                <h3>Reportes</h3>
+                <p>Gestiona todos los reportes ciudadanos.</p>
+                @Html.ActionLink("Ir a Reportes", "Index", "Reportes", null, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 shadow-sm">
+                <h3>Luminarias</h3>
+                <p>Administra luminarias registradas en la ciudad.</p>
+                @Html.ActionLink("Ir a Luminarias", "Index", "Luminarias", null, new { @class = "btn btn-warning" })
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card p-3 shadow-sm">
+                <h3>Órdenes de Trabajo</h3>
+                <p>Asignación y control de órdenes técnicas.</p>
+                @Html.ActionLink("Ir a Órdenes", "Index", "Ordenes", null, new { @class = "btn btn-success" })
+            </div>
+        </div>
+
+    </div>
+
+    <hr />
+
+    <div class="text-center mt-4">
+        @if (!User.Identity.IsAuthenticated)
+        {
+            @Html.ActionLink("Iniciar Sesión", "Login", "Usuarios", null, new { @class = "btn btn-dark btn-lg" })
+        }
+    </div>
+
+</div>
