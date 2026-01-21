@@ -1,6 +1,7 @@
 ﻿using LuminTrack.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,6 +17,16 @@ namespace LuminTrack.Controllers
         public ActionResult Index()
         {
             return View(db.Reportes.ToList());
+        }
+
+        private bool EsAdmin()
+        {
+            return Session["Rol"] != null && Session["Rol"].ToString() == "Administrador";
+        }
+
+        private bool EsCiudadano()
+        {
+            return Session["Rol"] != null && Session["Rol"].ToString() == "Ciudadano";
         }
 
         // GET: Reportes/Details/5
@@ -34,59 +45,60 @@ namespace LuminTrack.Controllers
         // GET: Reportes/Create
         public ActionResult Create()
         {
+            if (Session["Rol"] == null)
+                return RedirectToAction("Login", "Usuarios");
+
             return View();
         }
 
-        // POST: Reportes/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Reporte reporte, HttpPostedFileBase foto)
+        public ActionResult Create(Reporte reporte)
         {
-            if (foto != null && foto.ContentLength > 0)
-            {
-                string ruta = "/Uploads/" + foto.FileName;
-                foto.SaveAs(Server.MapPath("~" + ruta));
-                reporte.FotoURL = ruta;
-            }
+            if (Session["Rol"] == null)
+                return RedirectToAction("Login", "Usuarios");
+
+            reporte.UsuarioEmail = User.Identity.Name;
 
             if (ModelState.IsValid)
             {
                 db.Reportes.Add(reporte);
                 db.SaveChanges();
+
+                if (EsCiudadano())
+                    return RedirectToAction("MisReportes");
+
                 return RedirectToAction("Index");
             }
 
             return View(reporte);
         }
 
+
         // GET: Reportes/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (!EsAdmin())
+                return RedirectToAction("Index", "Home");
 
-            Reporte reporte = db.Reportes.Find(id);
-            if (reporte == null)
+            if (id == null)
                 return HttpNotFound();
 
+            var reporte = db.Reportes.Find(id);
             return View(reporte);
         }
 
-        // POST: Reportes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Reporte reporte, HttpPostedFileBase foto)
+        public ActionResult Edit(Reporte reporte)
         {
-            if (foto != null && foto.ContentLength > 0)
-            {
-                string ruta = "/Uploads/" + foto.FileName;
-                foto.SaveAs(Server.MapPath("~" + ruta));
-                reporte.FotoURL = ruta;
-            }
+            if (!EsAdmin())
+                return RedirectToAction("Index", "Home");
 
             if (ModelState.IsValid)
             {
-                db.Entry(reporte).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(reporte).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -97,25 +109,33 @@ namespace LuminTrack.Controllers
         // GET: Reportes/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (!EsAdmin())
+                return RedirectToAction("Index", "Home");
 
-            Reporte reporte = db.Reportes.Find(id);
-            if (reporte == null)
-                return HttpNotFound();
-
+            var reporte = db.Reportes.Find(id);
             return View(reporte);
         }
 
-        // POST: Reportes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Reporte reporte = db.Reportes.Find(id);
+            if (!EsAdmin())
+                return RedirectToAction("Index", "Home");
+
+            var reporte = db.Reportes.Find(id);
             db.Reportes.Remove(reporte);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public ActionResult MisReportes()
+        {
+            ViewBag.Email = User.Identity.Name;
+            ViewBag.Auth = User.Identity.IsAuthenticated;
+
+            var reportes = db.Reportes.ToList();
+            return View(reportes);
         }
     }
 }

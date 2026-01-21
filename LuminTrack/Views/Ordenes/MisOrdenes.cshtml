@@ -1,0 +1,23 @@
+﻿@model IEnumerable<LuminTrack.Models.OrdenTrabajo>
+
+<h2>Mis Órdenes de Trabajo</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acción</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Descripcion</td>
+            <td>@item.Estado</td>
+            <td>
+                @Html.ActionLink("Actualizar", "Actualizar", new { id = item.Id },
+                    new { @class = "btn btn-warning btn-sm" })
+            </td>
+        </tr>
+    }
+</table>

@@ -32,5 +32,9 @@ namespace LuminTrack.Models
 
         [Required]
         public string Estado { get; set; } = "Enviado";
+
+        [Required]
+        [StringLength(100)]
+        public string UsuarioEmail { get; set; }
     }
 }

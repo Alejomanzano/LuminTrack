@@ -1,0 +1,28 @@
+﻿@model IEnumerable<LuminTrack.Models.Reporte>
+
+<h2>Mis Reportes</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Descripcion</td>
+                <td>@item.Categoria</td>
+                <td>@item.Fecha</td>
+                <td>@item.Estado</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+@Html.ActionLink("Crear nuevo reporte", "Create", null, new { @class = "btn btn-primary" })

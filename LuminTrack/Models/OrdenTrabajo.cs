@@ -11,24 +11,25 @@ namespace LuminTrack.Models
         public int Id { get; set; }
 
         [Required]
-        public DateTime FechaCreacion { get; set; } = DateTime.Now;
-
-        [Required]
-        [StringLength(500)]
         public string Descripcion { get; set; }
 
         [Required]
-        public string Estado { get; set; } // Asignada, EnProceso, Finalizada, Cancelada
+        public string Estado { get; set; }
 
-        public string FotoEvidenciaURL { get; set; }
+        // ✅ FECHA DE CREACIÓN
+        public DateTime FechaCreacion { get; set; } = DateTime.Now;
 
-        // Relación opcional con técnico (cuando creemos Usuarios)
-        public string TecnicoAsignado { get; set; }
+        // ✅ TÉCNICO ASIGNADO (EMAIL)
+        public string TecnicoEmail { get; set; }
 
-        // Relación opcional con reporte
+        // ❌ NO USAR TecnicoAsignado si no existe
+        // Usa TecnicoEmail en la vista
+
+        // Relaciones opcionales
         public int? ReporteId { get; set; }
-
-        // Relación opcional con luminaria
         public int? LuminariaId { get; set; }
+
+        // Evidencia
+        public string FotoEvidenciaURL { get; set; }
     }
 }

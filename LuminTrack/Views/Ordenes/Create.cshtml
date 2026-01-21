@@ -22,10 +22,7 @@
         }), "-- Seleccione Estado --", new { @class = "form-control" })
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(m => m.TecnicoAsignado)
-        @Html.TextBoxFor(m => m.TecnicoAsignado, new { @class = "form-control" })
-    </div>
+    
 
     <div class="form-group">
         @Html.Label("Asociar a Reporte (Opcional)")
@@ -42,6 +39,16 @@
     <div class="form-group">
         <label>Evidencia Fotográfica</label>
         <input type="file" name="evidencia" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Técnico Asignado</label>
+        @Html.DropDownListFor(
+            m => m.TecnicoEmail,
+            (SelectList)ViewBag.Tecnicos,
+            "-- Seleccione Técnico --",
+            new { @class = "form-control" }
+        )
     </div>
 
     <button type="submit" class="btn btn-primary">Guardar</button>

@@ -46,7 +46,18 @@ namespace LuminTrack.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Usuario usuario, string Password)
         {
-            usuario.PasswordHash = PasswordHelper.Hash(Password);
+            if (string.IsNullOrWhiteSpace(Password))
+            {
+                ModelState.AddModelError("Password", "La contraseña es obligatoria");
+            }
+            else
+            {
+                // 🔥 Generar hash ANTES de validar
+                usuario.PasswordHash = PasswordHelper.Hash(Password);
+
+                // 🔥 Limpiar error previo si existía
+                ModelState.Remove("PasswordHash");
+            }
 
             if (ModelState.IsValid)
             {
@@ -77,23 +88,38 @@ namespace LuminTrack.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Usuario usuario, string Password)
         {
-            if (!string.IsNullOrEmpty(Password))
+            // 🔥 Usuario original desde la BD
+            var usuarioDB = db.Usuarios.Find(usuario.Id);
+
+            if (usuarioDB == null)
+                return HttpNotFound();
+
+            // Actualizar campos editables
+            usuarioDB.Nombre = usuario.Nombre;
+            usuarioDB.Apellido = usuario.Apellido;
+            usuarioDB.Email = usuario.Email;
+            usuarioDB.Rol = usuario.Rol;
+
+            // Si se escribió nueva contraseña
+            if (!string.IsNullOrWhiteSpace(Password))
             {
-                usuario.PasswordHash = PasswordHelper.Hash(Password);
+                usuarioDB.PasswordHash = PasswordHelper.Hash(Password);
             }
-            else
-            {
-                db.Entry(usuario).Property(x => x.PasswordHash).IsModified = false;
-            }
+
+            // 🔥 Limpiar validación de PasswordHash
+            ModelState.Remove("PasswordHash");
 
             if (ModelState.IsValid)
             {
-                db.Entry(usuario).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.Roles = new SelectList(new[] { "Administrador", "Tecnico", "Ciudadano" }, usuario.Rol);
+            ViewBag.Roles = new SelectList(
+                new[] { "Administrador", "Tecnico", "Ciudadano" },
+                usuario.Rol
+            );
+
             return View(usuario);
         }
 
@@ -120,7 +146,6 @@ namespace LuminTrack.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         // LOGIN (OPCIONAL)
         public ActionResult Login()
         {
@@ -132,11 +157,29 @@ namespace LuminTrack.Controllers
         {
             string hash = PasswordHelper.Hash(password);
 
-            var user = db.Usuarios.FirstOrDefault(u => u.Email == email && u.PasswordHash == hash);
+            var user = db.Usuarios.FirstOrDefault(
+                u => u.Email == email && u.PasswordHash == hash
+            );
+
             if (user != null)
             {
                 FormsAuthentication.SetAuthCookie(user.Email, false);
                 Session["Rol"] = user.Rol;
+                Session["Email"] = user.Email;
+
+                if (user.Rol == "Administrador")
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else if (user.Rol == "Ciudadano")
+                {
+                    return RedirectToAction("Index", "Ciudadano");
+                }
+                else if (user.Rol == "Tecnico")
+                {
+                    return RedirectToAction("Index", "Tecnico");
+                }
+
                 return RedirectToAction("Index", "Home");
             }
 

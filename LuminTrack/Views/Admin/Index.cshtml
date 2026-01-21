@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Panel de Administración";
+}
+
+<style>
+    .admin-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+    }
+
+        .admin-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            text-decoration: none;
+        }
+
+    .admin-icon {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="container mt-5">
+    <h1 class="text-center mb-2">Panel de Administración</h1>
+    <p class="text-center text-muted mb-5">
+        Gestión general del sistema LuminTrack
+    </p>
+
+    <div class="row">
+
+        <!-- LUMINARIAS -->
+        <div class="col-md-3 mb-4">
+            <a href="@Url.Action("Index","Luminarias")" class="text-decoration-none">
+                <div class="card admin-card text-center bg-primary text-white h-100">
+                    <div class="card-body">
+                        <div class="admin-icon">💡</div>
+                        <h5 class="card-title">Luminarias</h5>
+                        <p class="card-text">
+                            Registrar y gestionar luminarias
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- ÓRDENES -->
+        <div class="col-md-3 mb-4">
+            <a href="@Url.Action("Index","Ordenes")" class="text-decoration-none">
+                <div class="card admin-card text-center bg-warning text-dark h-100">
+                    <div class="card-body">
+                        <div class="admin-icon">🛠️</div>
+                        <h5 class="card-title">Órdenes</h5>
+                        <p class="card-text">
+                            Órdenes de trabajo y mantenimiento
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- REPORTES -->
+        <div class="col-md-3 mb-4">
+            <a href="@Url.Action("Index","Reportes")" class="text-decoration-none">
+                <div class="card admin-card text-center bg-success text-white h-100">
+                    <div class="card-body">
+                        <div class="admin-icon">📊</div>
+                        <h5 class="card-title">Reportes</h5>
+                        <p class="card-text">
+                            Estadísticas y reportes del sistema
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- USUARIOS -->
+        <div class="col-md-3 mb-4">
+            <a href="@Url.Action("Index","Usuarios")" class="text-decoration-none">
+                <div class="card admin-card text-center bg-dark text-white h-100">
+                    <div class="card-body">
+                        <div class="admin-icon">👥</div>
+                        <h5 class="card-title">Usuarios</h5>
+                        <p class="card-text">
+                            Administración de usuarios y roles
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>

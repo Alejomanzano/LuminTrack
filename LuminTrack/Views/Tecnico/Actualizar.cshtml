@@ -1,0 +1,26 @@
+﻿@model LuminTrack.Models.OrdenTrabajo
+
+<h2>Actualizar Orden</h2>
+
+@using (Html.BeginForm("Actualizar", "Ordenes", FormMethod.Post,
+        new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.Id)
+
+    <div class="form-group">
+        <label>Estado</label>
+        @Html.DropDownList("Estado", new SelectList(new[]
+        {
+            "EnProceso",
+            "Finalizada"
+        }), new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <label>Evidencia</label>
+        <input type="file" name="evidencia" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-success">Guardar</button>
+}

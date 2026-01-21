@@ -127,10 +127,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CiudadanoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LuminariasController.cs" />
     <Compile Include="Controllers\OrdenesController.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Controllers\TecnicoController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -146,6 +149,22 @@
     <Compile Include="Migrations\202512080355496_ResetModels.cs" />
     <Compile Include="Migrations\202512080355496_ResetModels.Designer.cs">
       <DependentUpon>202512080355496_ResetModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202512080443224_LuminariasFix.cs" />
+    <Compile Include="Migrations\202512080443224_LuminariasFix.Designer.cs">
+      <DependentUpon>202512080443224_LuminariasFix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202601200517032_AddUsuarioEmailToReporte.cs" />
+    <Compile Include="Migrations\202601200517032_AddUsuarioEmailToReporte.Designer.cs">
+      <DependentUpon>202601200517032_AddUsuarioEmailToReporte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202601200604177_InitialCreate1.cs" />
+    <Compile Include="Migrations\202601200604177_InitialCreate1.Designer.cs">
+      <DependentUpon>202601200604177_InitialCreate1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202601200615539_AddFechaYFotoOrden.cs" />
+    <Compile Include="Migrations\202601200615539_AddFechaYFotoOrden.Designer.cs">
+      <DependentUpon>202601200615539_AddFechaYFotoOrden.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\PasswordHelper.cs" />
@@ -216,17 +235,25 @@
     <Content Include="Views\Luminarias\Create.cshtml" />
     <Content Include="Views\Luminarias\Edit.cshtml" />
     <Content Include="Views\Luminarias\Details.cshtml" />
-    <Content Include="Views\Luminarias\Delet.cshtml" />
+    <Content Include="Views\Luminarias\Delete.cshtml" />
     <Content Include="Views\Ordenes\Index.cshtml" />
     <Content Include="Views\Ordenes\Create.cshtml" />
     <Content Include="Views\Ordenes\Details.cshtml" />
-    <Content Include="Views\Ordenes\Delet.cshtml" />
+    <Content Include="Views\Ordenes\Delete.cshtml" />
     <Content Include="Views\Ordenes\Edit.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Usuarios\Create.cshtml" />
     <Content Include="Views\Usuarios\Edit.cshtml" />
     <Content Include="Views\Usuarios\Details.cshtml" />
     <Content Include="Views\Usuarios\Login.cshtml" />
+    <Content Include="Views\Usuarios\Delete.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Ciudadano\Index.cshtml" />
+    <Content Include="Views\Reportes\MisReportes.cshtml" />
+    <Content Include="Views\Tecnico\Index.cshtml" />
+    <Content Include="Views\Ordenes\MisOrdenes.cshtml" />
+    <Content Include="Views\Tecnico\Actualizar.cshtml" />
+    <Content Include="Views\Ordenes\Actualizar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -269,6 +296,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202512080355496_ResetModels.resx">
       <DependentUpon>202512080355496_ResetModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202512080443224_LuminariasFix.resx">
+      <DependentUpon>202512080443224_LuminariasFix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601200517032_AddUsuarioEmailToReporte.resx">
+      <DependentUpon>202601200517032_AddUsuarioEmailToReporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601200604177_InitialCreate1.resx">
+      <DependentUpon>202601200604177_InitialCreate1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202601200615539_AddFechaYFotoOrden.resx">
+      <DependentUpon>202601200615539_AddFechaYFotoOrden.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -9,77 +9,71 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
 
-            <!-- NOMBRE DE LA APP -->
-            @Html.ActionLink("LuminTrack", "Index", "Home", null, new { @class = "navbar-brand" })
+            <!-- NOMBRE DEL SISTEMA -->
+            @Html.ActionLink(
+                "LuminTrack",
+                "Index",
+                "Home",
+                null,
+                new { @class = "navbar-brand" }
+            )
 
-            <!-- Botón responsive -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                    aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- Contenido -->
-            <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav me-auto">
+            <div class="collapse navbar-collapse" id="navbarNav">
 
+                <!-- MENU SOLO PARA ADMIN -->
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        @Html.ActionLink("Cerrar Sesión", "Logout", "Usuarios", null, new { @class = "nav-link" })
+                    </li>
+                }
+
+
+                <!-- LOGIN / LOGOUT -->
+                <ul class="navbar-nav ms-auto">
                     @if (!User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">
-                            @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })
-                        </li>
-                        <li class="nav-item">
-                            @Html.ActionLink("Reportes", "Index", "Reportes", null, new { @class = "nav-link" })
-                        </li>
-
-                        <!-- Añadido: Usuarios (visible aun sin login para que puedas acceder al Index) -->
-                        <li class="nav-item">
-                            @Html.ActionLink("Usuarios", "Index", "Usuarios", null, new { @class = "nav-link" })
-                        </li>
-
-                        <li class="nav-item">
-                            @Html.ActionLink("Iniciar Sesión", "Login", "Usuarios", null, new { @class = "nav-link" })
+                            @Html.ActionLink(
+                                "Iniciar Sesión",
+                                "Login",
+                                "Usuarios",
+                                null,
+                                new { @class = "nav-link" }
+                            )
                         </li>
                     }
                     else
                     {
-                        string rol = Session["Rol"]?.ToString();
-
-                        if (rol == "Administrador")
-                        {
-                            <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Usuarios", "Index", "Usuarios", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Reportes", "Index", "Reportes", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Luminarias", "Index", "Luminarias", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Órdenes", "Index", "Ordenes", null, new { @class = "nav-link" })</li>
-                        }
-
-                        else if (rol == "Tecnico")
-                        {
-                            <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Órdenes", "Index", "Ordenes", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Luminarias", "Index", "Luminarias", null, new { @class = "nav-link" })</li>
-                        }
-
-                        else if (rol == "Ciudadano")
-                        {
-                            <li class="nav-item">@Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Crear Reporte", "Create", "Reportes", null, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Mis Reportes", "Index", "Reportes", null, new { @class = "nav-link" })</li>
-                        }
-
-                        <!-- Botón Salir -->
-                        <li class="nav-item ms-auto">
-                            @Html.ActionLink("Salir (" + User.Identity.Name + ")", "Logout", "Usuarios", null, new { @class = "nav-link text-danger fw-bold" })
+                        <li class="nav-item">
+                            <span class="navbar-text text-light me-3">
+                                @User.Identity.Name
+                            </span>
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink(
+                                "Cerrar Sesión",
+                                "Logout",
+                                "Usuarios",
+                                null,
+                                new { @class = "nav-link" }
+                            )
                         </li>
                     }
                 </ul>
-            </div>
 
+            </div>
         </div>
     </nav>
+
 
 
     <div class="container body-content">

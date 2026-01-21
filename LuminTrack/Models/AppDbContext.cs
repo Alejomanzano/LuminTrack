@@ -10,11 +10,10 @@ namespace LuminTrack.Models
     {
         public AppDbContext() : base("DefaultConnection") { }
 
-        public DbSet<Reporte> Reportes { get; set; }
-        public DbSet<Luminaria> Luminarias { get; set; }
-
-        public DbSet<OrdenTrabajo> OrdenesTrabajo { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Luminaria> Luminarias { get; set; }
+        public DbSet<Reporte> Reportes { get; set; }
+        public DbSet<OrdenTrabajo> OrdenesTrabajo { get; set; }
 
     }
 }
